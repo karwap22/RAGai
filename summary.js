@@ -1,9 +1,8 @@
-function getAllText() {
+function summarizeText() {
     console.log("Webpage detected — extracting with innerText...");
-    summarizeText(document.body.innerText);
-}
-
-function summarizeText(extractedText) {
+    
+    let extractedText = document.body.innerText;
+    let url = window.location.href;
     fetch("http://localhost:5000/summarize", {
         method: "POST",
         headers: {
@@ -14,7 +13,12 @@ function summarizeText(extractedText) {
     .then(response => response.json())
     .then(data => {
         console.log("Summary from Ollama:", data.summary);
-        // browser.storage.local.set({"summary": data.summary });
+        const pageUrl = window.location.href;
+        const summary = data.summary;
+        browser.storage.local.set({ [pageUrl]: summary })
+        .then(() => console.log("Summary stored for", pageUrl))
+        .catch(err => console.error("Storage error:", err));
+
         browser.runtime.sendMessage({ type: "summary", data: data.summary });
     })
     .catch(error => {
@@ -23,4 +27,4 @@ function summarizeText(extractedText) {
     });
 }
 
-getAllText();
+summarizeText();

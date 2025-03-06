@@ -1,17 +1,92 @@
-body {
-    font-family: Arial, sans-serif;
-    width: 600px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Body styling */
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    padding: 20px;
+    width: 500px;
+  }
+  
+  /* Header */
+  h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #2c3e50;
+  }
+  
+  /* Events display */
+  #events {
+    background-color: #ecf0f1;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #7f8c8d;
+  }
+  
+  /* General button styling */
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  /* Hover effect for buttons */
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Summary container styling */
+  #summary {
+    background: #fff;
+    padding: 15px;
+    margin: 15px 0;
     min-height: 200px;
     height: auto;
-    padding: 10px;
-}
-#summary {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #bdc3c7;
     border-radius: 5px;
-    background-color: #f9f9f9;
-    white-space: pre-wrap;
-    height: auto;
-    overflow-y: auto;
-}
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    color: #34495e;
+  }
+  
+  /* Interactive section layout */
+  #interactive {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Text input field */
+  #question {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  
+  /* Answer container styling */
+  #answer {
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
