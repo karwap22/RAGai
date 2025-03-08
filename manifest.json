@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Extracts all text from a webpage and summarizes it using Ollama.",
   "icons": {
-      "48": "icon.png"
+      "48": "frontend/icon.png"
   },
   "permissions": [
       "activeTab",
@@ -14,10 +14,10 @@
   ],
   
   "background": {
-      "scripts": ["background.js"],
+      "scripts": ["frontend/background.js"],
       "persistent": false
   },
   "browser_action": {
-      "default_popup": "popup.html"
+      "default_popup": "frontend/popup.html"
   }
 }
