@@ -46,8 +46,18 @@
 
 
 
-import ollama
-text = "Paawan is a good boy studying in IIT Jodhpur"
-response = ollama.generate(model='llama3.2', prompt=f"Summarize the following text:\n{text}")
+from transformers import pipeline
 
-print(response)
+qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased")
+text = "The sun rises in the east. Plants perform photosynthesis. Water boils at 100 degrees Celsius. The earth orbits the sun in 365 days."
+question = "What is the process by which plants make food?"
+
+
+result = qa_pipeline({
+    'context': text,
+    'question': question
+})
+
+print(f"Answer: {result['answer']}")
+print(f"Start position: {result['start']}")
+print(f"End position: {result['end']}")
