@@ -7,8 +7,6 @@ from utils import generate_question_prompt, generate_summary_prompt
 app = Flask(__name__)
 CORS(app)
 
-# Global vector store: each entry is a dict with keys "text" and "embedding"
-# In production, you might want to index multiple texts/chunks.
 vector_store = []
 
 def get_embedding(text):
