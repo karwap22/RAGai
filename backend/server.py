@@ -71,8 +71,6 @@ def solve_question():
     if not vector_store:
         return jsonify({"message": "No text has been processed yet"}), 400
 
-    # For a RAG style approach, we compute the question embedding and then retrieve
-    # the stored text with the highest cosine similarity.
     question_embedding = get_embedding(question)
     best_match = None
     best_score = -1

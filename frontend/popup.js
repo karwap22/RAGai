@@ -7,11 +7,11 @@ document.getElementById("clearText").addEventListener("click",()=>{
     browser.tabs.query({ active: true, currentWindow: true })
     .then((tabs) => {
         const currentUrl = tabs[0].url;
-        const summary = "Generate New Summary";
-        browser.storage.local.set({ [currentUrl]: summary })
+        const summary = "Generate New Conversation";
+        browser.storage.local.set({ [currentUrl+"-ans"]: summary })
         .then(() => console.log("Summary stored for", currentUrl))
         .catch(err => console.error("Storage error:", err));
-        document.getElementById("summary").innerText = summary;
+        document.getElementById("answer").innerText = summary;
         return browser.storage.local.get(currentUrl);
     })
     .catch(error => {
@@ -33,7 +33,7 @@ document.getElementById("ask").addEventListener("click", ()=>{
 
 browser.runtime.onMessage.addListener((message) => {
     if (message.type === "summary") {
-        document.getElementById("summary").innerText = message.data;
+        document.getElementById("answer").innerText = message.data;
     }
     if (message.type === "answer") {
         document.getElementById("answer").innerText = message.data;
@@ -47,7 +47,7 @@ browser.tabs.query({ active: true, currentWindow: true })
     return browser.storage.local.get(currentUrl);
   })
   .then((result) => {
-    const summaryDiv = document.getElementById("summary");
+    const summaryDiv = document.getElementById("answer");
     if (result && result[Object.keys(result)[0]]) {
       summaryDiv.innerText = result[Object.keys(result)[0]];
     } else {

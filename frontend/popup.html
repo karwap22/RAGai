@@ -7,22 +7,20 @@
 <body>
     <h3>AssIssistant</h3>
     <div id="events">NO EXISTING EVENTS</div>
-    <div style="display: flex;">
-        <button id="extractText" style="width: 55%;margin-right: 5%;">Extract Text & Summarize</button>
-        <button id="clearText" style="width: 35%;">Clear!</button>
-    </div>
-    
-    <div id="summary">
-        <strong>Summary will appear here...</strong>
-    </div>
     <div id="interactive">
         <input type="text" id="question" placeholder="Ask Any question">
-        <button id="ask">Ask</button>
-        <div id="answer">
-            Ask question first!
-        </div>
     </div>
     
+    <div style="display: flex; margin-top: 1%;">
+        <button id="extractText" style="width: 32%;margin-right: 2%;">Read Text & Summarize</button>
+        <button id="ask" style="width: 32%;margin-right: 2%;">Ask</button>
+        <button id="clearText" style="width: 32%;">Clear!</button>
+        
+    </div>
+    <div id="answer">
+        Ask question first!
+    </div>
+
     <script src="popup.js"></script>
 </body>
 </html>

@@ -2,7 +2,8 @@ function summarizeText() {
     console.log("Webpage detected — extracting with innerText...");
   
     let extractedText = document.body.innerText;
-    let url = window.location.href;
+    console.log(extractedText);
+    let url = window.location.href+"-ans";
   
     fetch("http://localhost:5000/summarize", {
       method: "POST",
