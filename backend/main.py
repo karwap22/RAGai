@@ -72,7 +72,6 @@
  
 # Help and feedback'''
 
-
 # from langchain.schema import Document
 # from langchain_community.embeddings import OllamaEmbeddings
 # from langchain_community.vectorstores import FAISS
@@ -82,30 +81,51 @@
 # from langchain.chains import create_retrieval_chain
 # from langchain_community.llms import Ollama
 
+# # Suppose you have a variable 'text' that contains your source text.
 # docs = [Document(page_content=text)]
+
+# # Split the text into chunks to form documents.
 # text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 # documents = text_splitter.split_documents(docs)
+
+# # Create embeddings and a vector store.
 # embeddings = OllamaEmbeddings(model="llama3.2")
 # vector = FAISS.from_documents(documents, embeddings)
 # retriever = vector.as_retriever()
+
+# # Initialize your LLM and prompt.
 # model = Ollama(model="llama3.2")
-# prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+# prompt = ChatPromptTemplate.from_template(
+#     """Answer the following question based only on the provided context:
 
 # <context>
 # {context}
 # </context>
 
-# Question: {input}""")
+# Question: {input}"""
+# )
 
+# # Create the document chain and the retrieval chain.
 # document_chain = create_stuff_documents_chain(model, prompt)
 # retrieval_chain = create_retrieval_chain(retriever, document_chain)
-# response_stream = retrieval_chain.stream({"input": "What was the name of the company that posted it?"})
 
-# print("Answer: ", end="", flush=True)
-# for chunk in response_stream:
-#     if "answer" in chunk:
-#         print(chunk["answer"], end="", flush=True)
+# # Instead of streaming, call the chain normally to get the full result including source documents.
+# result = retrieval_chain.invoke({"input": "What was the name of the company that posted it?"})
 
+# print("-------Context-------")
+# cnt = 1
+# # Print the final answer.
+# if "context" in result:
+#     for i in result["context"]:
+#         print("NO - ",cnt)
+#         print(i.page_content)
+#         cnt +=1
+# print("\n"*5)
+
+# # Print the context that was used (i.e. the source documents).
+# print("\nContext Used:")
+# for doc in result.get("source_documents", []):
+#     print(doc.page_content)
 
 
 
@@ -121,6 +141,13 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 from langchain_community.llms import Ollama
+import re
+
+def fix_broken_words(text):
+    # This regex finds patterns where a letter or punctuation is followed by a space and then another letter.
+    # It removes the space, joining them into one word.
+    fixed_text = re.sub(r'(?<=\w)\s+(?=\w)', '', text)
+    return fixed_text
 
 app = Flask(__name__)
 CORS(app)
@@ -132,7 +159,7 @@ embeddings = OllamaEmbeddings(model="llama3.2")
 model = Ollama(model="llama3.2")
 
 # Define prompt template for question answering
-prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context and check for grammatical correctness and DONT GIVE ANY BROKEN WORDS:
 
 <context>
 {context}
@@ -181,9 +208,23 @@ def summarize_text():
     try:
         def generate():
             print("\n" + "-" * 50 + "\nSummary Generation Started.")
+            buffer = ""
+            
             for chunk in model.stream(f"Summarize the following content: {text[:4000]}"):
                 response_text = chunk  # chunk is expected to be a string
+                print(response_text)
+                buffer += chunk
+
+                if buffer and buffer[-1] in " .,\n":
+                    # Fix broken words in the current buffer
+                    response_text = fix_broken_words(buffer)
+                    # print(response_text, end="", flush=True)
+                    buffer = ""
                 yield f"data: {response_text}\n\n"
+            if buffer:
+                    response_text = fix_broken_words(buffer)
+                    # print(response_text, end="", flush=True)
+            yield f"data: {response_text}\n\n"
             yield "data: [DONE]\n\n"
 
         print("Summary Generation Done!")

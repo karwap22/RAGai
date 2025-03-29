@@ -50,7 +50,7 @@
   
   /* Hover effect for buttons */
   button:hover {
-    background-color: #2980b9;
+    filter: brightness(90%);
   }
   
   /* Summary container styling */
@@ -83,7 +83,7 @@
   }
   
   /* Answer container styling */
-  #answer {
+  #answer, #heading {
     background: #ecf0f1;
     padding: 10px;
     border-radius: 5px;
@@ -94,4 +94,6 @@
     color: #2c3e50;
     text-align: left;
   }
-  
+  #heading {
+    min-height: 20px;
+  }  
