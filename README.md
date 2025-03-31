@@ -7,8 +7,6 @@ https://github.com/user-attachments/assets/afcd5b70-7237-4057-9bce-ef7c352944ed
 
 A browser extension that extracts text from webpages, generates summaries, and answers questions using Retrieval-Augmented Generation (RAG) with Ollama.
 
-![AI Buddy Extension](frontend/icon.png)
-
 ## Features
 
 - **Text Extraction**: Extracts all text content from the current webpage
