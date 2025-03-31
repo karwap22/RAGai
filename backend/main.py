@@ -212,7 +212,6 @@ def summarize_text():
             
             for chunk in model.stream(f"Summarize the following content: {text[:4000]}"):
                 response_text = chunk  # chunk is expected to be a string
-                print(response_text)
                 buffer += chunk
 
                 if buffer and buffer[-1] in " .,\n":
