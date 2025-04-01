@@ -42,7 +42,7 @@ The extension consists of two main components:
 
 1. Clone this repository
 ```bash
-git clone https://github.com/your-username/ai-buddy-extension.git
+git clone https://github.com/karwap22/RAGi.git
 cd ai-buddy-extension
 ```
 2. Install required Python packages
